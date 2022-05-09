@@ -1,12 +1,8 @@
 import styled from "styled-components";
 import { Layout } from "@components";
 
-import {
-  AnimatePresence,
-  motion,
-  HTMLMotionProps,
-  Variants,
-} from "framer-motion";
+import { motion, HTMLMotionProps, Variants, LayoutGroup } from "framer-motion";
+import { useState } from "react";
 
 const headerVariants: Variants = {
   out: { y: "-100%" },
@@ -20,7 +16,8 @@ const headerVariants: Variants = {
   },
 };
 const Header = styled(motion.div)<HTMLMotionProps<"div">>`
-  background-color: red;
+  background-color: ${({ theme }) => theme.colors.green[50]};
+  border-bottom: 1px solid rgba(0, 0, 0, 0.12);
   padding: 2rem;
 `;
 
@@ -37,20 +34,19 @@ const footerVariants: Variants = {
 };
 
 const Footer = styled(motion.div)<HTMLMotionProps<"div">>`
-  background-color: green;
+  background-color: ${({ theme }) => theme.colors.blue[50]};
+  border-top: 1px solid rgba(0, 0, 0, 0.12);
   padding: 1rem 2rem;
 `;
 
 const Root = styled(motion.div)<HTMLMotionProps<"div">>`
-  background-color: purple;
   width: 100%;
   height: 100%;
-  border: 1px solid red;
   padding: 2rem;
   display: flex;
   flex-direction: column;
   justify-content: center;
-
+  background-color: ${({ theme }) => theme.colors.red[50]};
   max-width: 960px;
   margin: 0 auto;
 
@@ -62,6 +58,16 @@ const Root = styled(motion.div)<HTMLMotionProps<"div">>`
   & p {
     max-width: 54ch;
     border: 1px solid red;
+  }
+
+  & .controls {
+    margin: 1rem 0;
+  }
+
+  & button {
+    width: fit-content;
+    display: inline-flex;
+    margin-right: 0.5rem;
   }
 `;
 
@@ -82,42 +88,64 @@ const childVariants: Variants = {
   in: { opacity: 1, y: 0 },
 };
 
-const Content = () => (
-  <Root variants={rootVariants} initial="out" animate="in" exit="out">
-    <motion.h1 variants={childVariants} layout>
-      Retro brunch quinoa williamsburg actually austin VHS meh. Echo park health
-      goth viral truffaut.
-    </motion.h1>
-    <motion.p variants={childVariants} layout>
-      Readymade chicharrones viral tilde hoodie bitters street art thundercats
-      tofu chillwave DSA keffiyeh narwhal church-key helvetica. Hella try-hard
-      before they sold out sriracha, mustache hoodie heirloom. Leggings franzen
-      whatever gluten-free green juice. Wolf poutine you probably haven't heard
-      of them pork belly activated charcoal umami hella biodiesel, kombucha
-      gentrify narwhal 3 wolf moon before they sold out. PBR&B next level
-      succulents cliche tumeric readymade.
-    </motion.p>
-  </Root>
-);
-
 const IndexPage = () => {
+  const [showHeader, setShowHeader] = useState(true);
+  const [showFooter, setShowFooter] = useState(true);
+
   return (
     <Layout>
-      <AnimatePresence>
-        <Header variants={headerVariants} initial="out" animate="in" exit="out">
+      <LayoutGroup>
+        {showHeader && (
           <Layout.Header>
-            <h3>Header</h3>
+            <Header
+              variants={headerVariants}
+              initial="out"
+              animate="in"
+              exit="out"
+            >
+              <h3>Header</h3>
+            </Header>
           </Layout.Header>
-        </Header>
-        <Layout.Content>
-          <Content />
-        </Layout.Content>
-        <Footer variants={footerVariants} initial="out" animate="in" exit="out">
+        )}
+        <Layout.Body>
+          <Root variants={rootVariants} initial="out" animate="in" exit="out">
+            <motion.h1 variants={childVariants} layout>
+              Retro brunch quinoa williamsburg actually austin VHS meh. Echo
+              park health goth viral truffaut.
+            </motion.h1>
+            <motion.p variants={childVariants} layout>
+              Readymade chicharrones viral tilde hoodie bitters street art
+              thundercats tofu chillwave DSA keffiyeh narwhal church-key
+              helvetica. Hella try-hard before they sold out sriracha, mustache
+              hoodie heirloom. Leggings franzen whatever gluten-free green
+              juice. Wolf poutine you probably haven't heard of them pork belly
+              activated charcoal umami hella biodiesel, kombucha gentrify
+              narwhal 3 wolf moon before they sold out. PBR&B next level
+              succulents cliche tumeric readymade.
+            </motion.p>
+            <div className="controls">
+              <button onClick={() => setShowHeader(!showHeader)}>
+                Toggle Header
+              </button>
+              <button onClick={() => setShowFooter(!showFooter)}>
+                Toggle Footer
+              </button>
+            </div>
+          </Root>
+        </Layout.Body>
+        {showFooter && (
           <Layout.Footer>
-            <h3>Footer</h3>
+            <Footer
+              variants={footerVariants}
+              initial="out"
+              animate="in"
+              exit="out"
+            >
+              <h3>Footer</h3>
+            </Footer>
           </Layout.Footer>
-        </Footer>
-      </AnimatePresence>
+        )}
+      </LayoutGroup>
     </Layout>
   );
 };
