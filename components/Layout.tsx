@@ -12,7 +12,10 @@ interface RootProps extends HTMLMotionProps<"section"> {
   hasFooter: boolean;
 }
 
-const Root = styled(motion.section)<RootProps>`
+const Root = styled(motion.section).withConfig({
+  shouldForwardProp: (prop, defaultValidatorFn) =>
+    !["hasHeader", "hasFooter"].includes(prop) && defaultValidatorFn(prop),
+})<RootProps>`
   display: grid;
   grid-template-rows: 1fr;
   overflow: hidden;
@@ -73,11 +76,13 @@ export const Layout = ({ children }: LayoutProps) => {
   const components = useMemo(() => {
     let items = new Set();
     const child = React.Children.only(children);
+
     if (React.isValidElement(child)) {
       getValidChildren(child.props.children).map((c: any) =>
         items.add(c.type.displayName)
       );
     }
+
     return [...items];
   }, [children]);
 
