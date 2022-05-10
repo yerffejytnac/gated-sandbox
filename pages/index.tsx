@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { Layout } from "@components";
 
-import { motion, HTMLMotionProps, Variants, LayoutGroup } from "framer-motion";
+import { motion, HTMLMotionProps, Variants } from "framer-motion";
 import { useState } from "react";
 
 const headerVariants: Variants = {
@@ -15,11 +15,6 @@ const headerVariants: Variants = {
     },
   },
 };
-const Header = styled(motion.div)<HTMLMotionProps<"div">>`
-  background-color: ${({ theme }) => theme.colors.green[50]};
-  border-bottom: 1px solid rgba(0, 0, 0, 0.12);
-  padding: 2rem;
-`;
 
 const footerVariants: Variants = {
   out: { y: "100%" },
@@ -33,22 +28,13 @@ const footerVariants: Variants = {
   },
 };
 
-const Footer = styled(motion.div)<HTMLMotionProps<"div">>`
-  background-color: ${({ theme }) => theme.colors.blue[50]};
-  border-top: 1px solid rgba(0, 0, 0, 0.12);
-  padding: 1rem 2rem;
-`;
-
 const Root = styled(motion.div)<HTMLMotionProps<"div">>`
   width: 100%;
   height: 100%;
   padding: 2rem;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  background-color: ${({ theme }) => theme.colors.red[50]};
   max-width: 960px;
   margin: 0 auto;
+  overflow: auto;
 
   & h1 {
     margin-bottom: 1rem;
@@ -58,6 +44,10 @@ const Root = styled(motion.div)<HTMLMotionProps<"div">>`
   & p {
     max-width: 54ch;
     border: 1px solid red;
+  }
+
+  & p + p {
+    margin-top: 1rem;
   }
 
   & .controls {
@@ -76,15 +66,15 @@ const rootVariants: Variants = {
   in: {
     opacity: 1,
     transition: {
-      delayChildren: 0.5,
-      staggerChildren: 0.25,
+      delayChildren: 0.25,
+      staggerChildren: 0.125,
       ease: "easeInOut",
     },
   },
 };
 
 const childVariants: Variants = {
-  out: { opacity: 0, y: "25%" },
+  out: { opacity: 0, y: 20 },
   in: { opacity: 1, y: 0 },
 };
 
@@ -94,58 +84,61 @@ const IndexPage = () => {
 
   return (
     <Layout>
-      <LayoutGroup>
+      <>
         {showHeader && (
-          <Layout.Header>
-            <Header
-              variants={headerVariants}
-              initial="out"
-              animate="in"
-              exit="out"
-            >
-              <h3>Header</h3>
-            </Header>
+          <Layout.Header
+            variants={headerVariants}
+            initial="out"
+            animate="in"
+            exit="out"
+          >
+            <h3>Header</h3>
           </Layout.Header>
         )}
-        <Layout.Body>
+        <Layout.Body layout="position">
           <Root variants={rootVariants} initial="out" animate="in" exit="out">
-            <motion.h1 variants={childVariants} layout>
+            <motion.h1 variants={childVariants}>
               Retro brunch quinoa williamsburg actually austin VHS meh. Echo
               park health goth viral truffaut.
             </motion.h1>
-            <motion.p variants={childVariants} layout>
+            <motion.p variants={childVariants}>
               Readymade chicharrones viral tilde hoodie bitters street art
               thundercats tofu chillwave DSA keffiyeh narwhal church-key
               helvetica. Hella try-hard before they sold out sriracha, mustache
               hoodie heirloom. Leggings franzen whatever gluten-free green
-              juice. Wolf poutine you probably haven't heard of them pork belly
-              activated charcoal umami hella biodiesel, kombucha gentrify
-              narwhal 3 wolf moon before they sold out. PBR&B next level
-              succulents cliche tumeric readymade.
+              juice.
             </motion.p>
-            <div className="controls">
+            <motion.div className="controls" variants={childVariants}>
               <button onClick={() => setShowHeader(!showHeader)}>
                 Toggle Header
               </button>
               <button onClick={() => setShowFooter(!showFooter)}>
                 Toggle Footer
               </button>
-            </div>
+            </motion.div>
+            <motion.p variants={childVariants}>
+              Raw denim craft beer disrupt vegan, vinyl iPhone cronut woke
+              praxis fixie everyday carry. Freegan poutine helvetica, hot
+              chicken literally stumptown celiac snackwave hexagon beard vice
+              mixtape. Cronut tonx pop-up banjo humblebrag occupy roof party
+              venmo paleo godard fanny pack tumeric. Venmo iceland enamel pin
+              kale chips stumptown portland yr sartorial YOLO cornhole praxis
+              mustache keytar everyday carry small batch. Shabby chic swag
+              sustainable YOLO cold-pressed banh mi.
+            </motion.p>
           </Root>
         </Layout.Body>
         {showFooter && (
-          <Layout.Footer>
-            <Footer
-              variants={footerVariants}
-              initial="out"
-              animate="in"
-              exit="out"
-            >
-              <h3>Footer</h3>
-            </Footer>
+          <Layout.Footer
+            variants={footerVariants}
+            initial="out"
+            animate="in"
+            exit="out"
+          >
+            <h3>Footer</h3>
           </Layout.Footer>
         )}
-      </LayoutGroup>
+      </>
     </Layout>
   );
 };
