@@ -126,6 +126,17 @@ const IndexPage = () => {
               mustache keytar everyday carry small batch. Shabby chic swag
               sustainable YOLO cold-pressed banh mi.
             </motion.p>
+            <motion.p>
+              Cornhole vaporware hammock, selvage letterpress celiac chillwave.
+              Raw denim tousled prism subway tile taiyaki letterpress ennui
+              fashion axe. Offal tumblr ramps XOXO paleo pinterest chartreuse
+              90's lomo hammock retro. Chillwave pabst thundercats edison bulb
+              woke put a bird on it banh mi organic snackwave 3 wolf moon plaid
+              cold-pressed flannel DSA art party. Skateboard live-edge selfies,
+              tacos crucifix knausgaard yr. Poutine glossier tbh banjo, deep v
+              polaroid selvage gentrify squid bespoke 90's ramps franzen
+              keffiyeh.
+            </motion.p>
           </Root>
         </Layout.Body>
         {showFooter && (
