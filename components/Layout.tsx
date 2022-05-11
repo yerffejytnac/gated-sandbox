@@ -21,7 +21,7 @@ const Root = styled(motion.section).withConfig({
   overflow: hidden;
   width: 100%;
   height: 100%;
-  background-color: ${({ theme }) => theme.colors.red[50]};
+  background-color: ${({ theme }) => theme.colors.gray[100]};
   ${({ hasHeader }) =>
     hasHeader &&
     `
@@ -45,9 +45,9 @@ const Root = styled(motion.section).withConfig({
 Root.displayName = "LayoutRoot";
 
 const Header = styled(motion.header)<HTMLMotionProps<"header">>`
-  background-color: ${({ theme }) => theme.colors.green[50]};
+  background-color: ${({ theme }) => theme.colors.white};
   border-bottom: 1px solid rgba(0, 0, 0, 0.12);
-  padding: 2rem;
+  padding: 1.5rem 1rem;
 `;
 
 Header.displayName = "LayoutHeader";
@@ -63,7 +63,7 @@ Body.displayName = "LayoutBody";
 const Footer = styled(motion.footer)<HTMLMotionProps<"footer">>`
   background-color: ${({ theme }) => theme.colors.blue[50]};
   border-top: 1px solid rgba(0, 0, 0, 0.12);
-  padding: 1rem 2rem;
+  padding: 1rem;
 `;
 
 Footer.displayName = "LayoutFooter";
