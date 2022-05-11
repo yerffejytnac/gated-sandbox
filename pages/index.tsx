@@ -1,9 +1,9 @@
-import { Layout } from "@components";
+import { Layout, TrainingAnimation } from "@components";
 
 const IndexPage = () => {
   return (
     <Layout>
-      <h1>Application</h1>
+      <TrainingAnimation />
     </Layout>
   );
 };
